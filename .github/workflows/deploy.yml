@@ -9,10 +9,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@master
+        - uses: actions/checkout@master
+        - uses: actions/setup-node@master
+          with:
+             node-version: "10.x"
 
       - name: install
-        run: npm install
+        - run: npm install
+        - run: npm run build
+        - uses: w9jds/firebase-action@master
+          with:
+            args: deploy --only hosting
+          env: 
+             FIREBASE_TOKEN: 1//03mR85WpjFjS8CgYIARAAGAMSNwF-L9IrQyjBLC8IJehkHgVlfghuId4XuMv2wy8m5HX5d_KNE-5_tnMh6b-ks2M0mJ6-fCKNvJM
 
       - name: plugins
         run: yarn add umi-plugin-antd-theme umi-plugin-pro
